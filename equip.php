@@ -149,7 +149,7 @@ require 'equipmentController.php';
                                     <td class="px-4 py-3 text-center">
                                         <a href="equip.php?action=update&id=<?= $equip['id'] ?>"
                                             class="btn-edit">Edit</a>
-                                        <a href="equipment.php?action=delete&id=<?= $equip['id'] ?>"
+                                        <a href="equipmentController.php?action=delete&id=<?= $equip['id'] ?>"
                                             onclick="return confirm('Are you sure you want to delete this equipment?')"
                                             class="btn-delete">Delete</a>
                                     </td>

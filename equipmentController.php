@@ -79,7 +79,7 @@ function deleteEquipement(PDO $pdo, $id)
 
 if (isset($_GET['action']) && $_GET['action'] === 'delete') {
     deleteEquipement($pdo, $_GET['id']);
-    header("Location: index.php");
+    header("Location: equip.php");
     exit;
 }
 
