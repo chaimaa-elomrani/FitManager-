@@ -1,6 +1,6 @@
 <?php 
 
-// require 'config/config.php';
+require 'config/config.php';
 
 function getEquipements(PDO $pdo)
 {
@@ -94,8 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         updateEquipement($pdo);
     }
 
-    header("Location: index.php");
+    header("Location: equip.php");
     exit;
 }
 
-?>

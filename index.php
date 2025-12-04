@@ -1,6 +1,5 @@
 <?php
 require 'courses.php';
-require 'equipment.php';
 
 ?>
 <!DOCTYPE html>
@@ -21,18 +20,25 @@ require 'equipment.php';
 
     <nav class="bg-black border-b-4 border-red-600 px-8 py-4">
         <div class="flex gap-8">
-            <button onclick="showTab('courses')"
-                class="tab-btn active text-white font-semibold pb-2 border-b-2 border-red-600">
+             <button onclick="showTab('courses')"
+                class="tab-btn  font-semibold pb-2">
+                <a href="index.php">
                 Courses
+                </a>
             </button>
-            <button onclick="showTab('equipment')" class="tab-btn text-gray-400 font-semibold pb-2 hover:text-white">
+
+            <button
+                class="tab-btn  font-semibold pb-2 hover:text-white">
+                <a href="equip.php">
                 Equipment
+                </a>
             </button>
         </div>
     </nav>
 
     <main class="p-8">
-        <div id="courses-tab" class="tab-content">
+        <div id="courses-tab"
+            class="tab-content <?= isset($_GET['tab']) && $_GET['tab'] === 'courses' ? 'hidden' : '' ?>">
 
             <?php if ($courseEdit): ?>
                 <form action="courses.php" method="POST" class="max-w-xl bg-white shadow p-6 rounded-lg mb-10">
@@ -100,12 +106,17 @@ require 'equipment.php';
                         <?php foreach ($courses as $course): ?>
                             <tr class="border-b border-gray-300 hover:bg-red-50 transition">
                                 <td class="px-4 py-3 text-sm text-black"><?= $course['id'] ?></td>
-                                <td class="px-4 py-3 text-sm text-black font-medium"><?=htmlspecialchars($course['fullname']) ?></td>
-                                <td class="px-4 py-3 text-sm text-black"><?= htmlspecialchars($course['category'])?></td>
-                                <td class="px-4 py-3 text-sm text-black"><?= htmlspecialchars($course['course_date']) ?></td>
+                                <td class="px-4 py-3 text-sm text-black font-medium">
+                                    <?= htmlspecialchars($course['fullname']) ?>
+                                </td>
+                                <td class="px-4 py-3 text-sm text-black"><?= htmlspecialchars($course['category']) ?></td>
+                                <td class="px-4 py-3 text-sm text-black"><?= htmlspecialchars($course['course_date']) ?>
+                                </td>
                                 <td class="px-4 py-3 text-sm text-black"><?= htmlspecialchars($course['heure']) ?></td>
                                 <td class="px-4 py-3 text-sm text-black"><?= htmlspecialchars($course['duree']) ?></td>
-                                <td class="px-4 py-3 text-sm text-black"><?=htmlspecialchars($course['max_participants']) ?></td>
+                                <td class="px-4 py-3 text-sm text-black">
+                                    <?= htmlspecialchars($course['max_participants']) ?>
+                                </td>
                                 <td class="px-4 py-3 text-center text-sm">
                                     <a href="index.php?action=update&id=<?= $course['id'] ?>" class="btn-edit">Edit</a>
                                     <a href="courses.php?action=delete&id=<?= $course['id'] ?>"
@@ -117,10 +128,6 @@ require 'equipment.php';
                 </table>
             </div>
         </div>
-
-
-
-
 
     </main>
 
