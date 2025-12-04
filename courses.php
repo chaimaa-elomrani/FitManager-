@@ -1,11 +1,13 @@
-<?php 
+<?php
 require 'config/config.php';
+
+
 function getCourses(PDO $pdo)
 {
     $stmt = $pdo->query("SELECT* FROM course");
     return $stmt->fetchAll();
 }
-$courses = getCourses($pdo);
+$courses = getCourses($pdo);    
 
 function addCourses(PDO $pdo)
 {
@@ -39,58 +41,65 @@ function addCourses(PDO $pdo)
 }
 
 
-function getCourseById(PDO $pdo, $id){
+function getCourseById(PDO $pdo, $id)
+{
     $stmt = $pdo->prepare("SELECT * from course where id = :id");
-    $stmt->execute([ ':id'=> $id]);
+    $stmt->execute([':id' => $id]);
     return $stmt->fetch();
 }
 
-$courseEdit = null ;
-if(isset($_GET['action']) && $_GET['action'] === 'update' && isset($_GET['id'])){
-    $courseEdit =  getCourseById($pdo , $_GET['id']);
+$courseEdit = null;
+if (isset($_GET['action']) && $_GET['action'] === 'update' && isset($_GET['id'])) {
+    $courseEdit = getCourseById($pdo, $_GET['id']);
 }
 
 
-function updateCourse(PDO $pdo){
-    if(isset($_POST['action']) && $_POST['action'] === 'update'){
+function updateCourse(PDO $pdo)
+{
+    if (isset($_POST['action']) && $_POST['action'] === 'update') {
 
         $sql = $pdo->prepare("UPDATE course SET fullname = :fullname, category = :category , 
         course_date =:date_c, heure = :heure , duree = :duree , max_participants = :max_p WHERE id = :id");
         $sql->execute([
-           ':fullname' => $_POST['fullname'],
+            ':fullname' => $_POST['fullname'],
             ':category' => $_POST['category'],
-            ':date_c'   => $_POST['date_c'],
-            ':heure'    => $_POST['hour'],
-            ':duree'    => $_POST['duree'],
-            ':max_p'    => $_POST['max_p'],
-            ':id'       => $_POST['id']
+            ':date_c' => $_POST['date_c'],
+            ':heure' => $_POST['hour'],
+            ':duree' => $_POST['duree'],
+            ':max_p' => $_POST['max_p'],
+            ':id' => $_POST['id']
         ]);
-        echo 'course updated'; 
+        echo 'course updated';
     }
 }
 
-function deleteCourse(PDO $pdo, $id){
-        $sql = $pdo->prepare("DELETE FROM course WHERE id = :id");
-        $sql->execute([':id' => $id]);
-        return $sql->rowCount() > 0 ; 
-    
+function deleteCourse(PDO $pdo, $id)
+{
+    $sql = $pdo->prepare("DELETE FROM course WHERE id = :id");
+    $sql->execute([':id' => $id]);
+    return $sql->rowCount() > 0;
+
 }
 
-if(isset($_GET['action']) && $_GET['action'] === "delete"){
+if (isset($_GET['action']) && $_GET['action'] === "delete") {
     $id = $_GET['id'];
-    deleteCourse($pdo , $id);
+    deleteCourse($pdo, $id);
     header('Location: index.php');
-    exit(); 
+    exit();
 }
 
 
 
-if($_SERVER['REQUEST_METHOD'] === 'POST'){
-    if($_POST['action'] === 'add'){
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($_POST['action'] === 'add') {
         addCourses($pdo);
+        header('Location: index.php');
+        exit();
     }
 
-    if($_POST['action'] === 'update'){
+    if ($_POST['action'] === 'update') {
         updateCourse($pdo);
+        header("Location: index.php");
+        exit();
     }
 }
