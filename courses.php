@@ -103,3 +103,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 }
+
+
+
+function getTotalCourses(PDO $pdo){
+     $sql = $pdo->query('SELECT count(*) as total FROM course');
+     $result =$sql->fetch(PDO::FETCH_ASSOC); 
+     return $result['total'];
+}
+
+$totalCourses = getTotalCourses($pdo);
+
+function getCoursesByCategory($pdo) {
+    $sql = $pdo->query('SELECT category, COUNT(*) as count FROM course GROUP BY category');
+    $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+    
+    $categories = [];
+    foreach ($result as $row) {
+        $categories[$row['category']] = $row['count'];
+    }
+    return $categories;
+}
+
+
+$coursesByCategory = getCoursesByCategory($pdo);

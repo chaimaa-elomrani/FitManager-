@@ -25,10 +25,33 @@ require 'equipmentController.php';
             <a href="equip.php" class="tab-btn active text-white font-semibold pb-2 border-b-2 border-red-600">
                 Equipment
             </a>
+             <a href="Dashboard.php" class="text-white font-semibold pb-2  border-red-600">
+                Dashboard
+            </a>
         </div>
     </nav>
 
     <main class="p-8">
+         <div class="flex gap-4 mb-5">
+
+            <input id="search" type="text" placeholder="Search title..." class="border p-2 rounded">
+
+            <select id="type" class="border p-2 rounded">
+                <option value="">All Types</option>
+                <option value="cardio">Cardio</option>
+                <option value="musculation">Musculation</option>
+                <option value="accessoire">Accessoire</option>
+            </select>
+
+            <select id="etat" class="border p-2 rounded">
+                <option value="">All State</option>
+                <option value="bon">Bon</option>
+                <option value="moyen">Moyen</option>
+                <option value="a_remplacer">À remplacer</option>
+            </select>
+
+        </div>
+
         <div id="equipment-tab" class="tab-content">
 
             <?php if ($equipToEdit): ?>
@@ -192,7 +215,7 @@ require 'equipmentController.php';
         }
 
         .btn-edit:hover {
-            background-color: #b91c1c;
+            background-color: #000;
         }
 
         .btn-delete {

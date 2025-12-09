@@ -1,7 +1,7 @@
 <?php
 require 'courses.php';
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,23 +20,39 @@ require 'courses.php';
 
     <nav class="bg-black border-b-4 border-red-600 px-8 py-4">
         <div class="flex gap-8">
-             <button onclick="showTab('courses')"
-                class="tab-btn  font-semibold pb-2">
-                <a href="index.php">
+            <a href="index.php" class="tab-btn active text-white font-semibold pb-2 hover:text-white">
                 Courses
-                </a>
-            </button>
-
-            <button
-                class="tab-btn  font-semibold pb-2 hover:text-white">
-                <a href="equip.php">
+            </a>
+            <a href="equip.php" class="text-white font-semibold pb-2  border-red-600">
                 Equipment
-                </a>
-            </button>
+            </a>
+            <a href="Dashboard.php" class="text-white font-semibold pb-2  border-red-600">
+                Dashboard
+            </a>
         </div>
     </nav>
 
     <main class="p-8">
+        <div class="flex gap-4 mb-5">
+
+            <input id="search" type="text" placeholder="Search title..." class="border p-2 rounded">
+
+            <select id="type" class="border p-2 rounded">
+                <option value="">All Types</option>
+                <option value="cardio">Cardio</option>
+                <option value="musculation">Musculation</option>
+                <option value="accessoire">Accessoire</option>
+            </select>
+
+            <select id="etat" class="border p-2 rounded">
+                <option value="">All State</option>
+                <option value="bon">Bon</option>
+                <option value="moyen">Moyen</option>
+                <option value="a_remplacer">À remplacer</option>
+            </select>
+
+        </div>
+
         <div id="courses-tab"
             class="tab-content <?= isset($_GET['tab']) && $_GET['tab'] === 'courses' ? 'hidden' : '' ?>">
 
@@ -49,8 +65,15 @@ require 'courses.php';
 
                     <input type="text" name="fullname" value="<?= $courseEdit['fullname'] ?>" placeholder="Full Name"
                         required class="w-full border p-2 rounded mb-3">
-                    <input type="text" name="category" value="<?= $courseEdit['category'] ?>" placeholder="Category"
-                        required class="w-full border p-2 rounded mb-3">
+                    <select name="category" required class="w-full border p-2 rounded mb-3">
+                        <option value="">Select Category</option>
+                        <option value="cardio" <?= $courseEdit['category'] === 'cardio' ? 'selected' : '' ?>>Cardio</option>
+                        <option value="musculation" <?= $courseEdit['category'] === 'musculation' ? 'selected' : '' ?>>
+                            Musculation</option>
+                        <option value="yoga" <?= $courseEdit['category'] === 'yoga' ? 'selected' : '' ?>>Yoga</option>
+                        <option value="aerobic" <?= $courseEdit['category'] === 'aerobic' ? 'selected' : '' ?>>Aérobic</option>
+                    </select>
+
                     <input type="date" name="date_c" value="<?= $courseEdit['course_date'] ?>" required
                         class="w-full border p-2 rounded mb-3">
                     <input type="time" name="hour" value="<?= $courseEdit['heure'] ?>" required
@@ -72,8 +95,14 @@ require 'courses.php';
 
                     <input type="text" name="fullname" placeholder="Full Name" required
                         class="w-full border p-2 rounded mb-3">
-                    <input type="text" name="category" placeholder="Category" required
-                        class="w-full border p-2 rounded mb-3">
+                    <select name="category" required class="w-full border p-2 rounded mb-3">
+                        <option value="">Select Category</option>
+                        <option value="cardio">Cardio</option>
+                        <option value="musculation">Musculation</option>
+                        <option value="yoga">Yoga</option>
+                        <option value="aerobic">Aérobic</option>
+                    </select>
+
                     <input type="date" name="date_c" required class="w-full border p-2 rounded mb-3">
                     <input type="time" name="hour" required class="w-full border p-2 rounded mb-3">
                     <input type="number" name="duree" placeholder="Duration" required
@@ -156,7 +185,7 @@ require 'courses.php';
         }
 
         .btn-edit:hover {
-            background-color: #b91c1c;
+            background-color: #000;
         }
 
         .btn-delete {

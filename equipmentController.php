@@ -98,3 +98,30 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit;
 }
 
+
+function getTotalEquipments(PDO $pdo){
+     $sql = $pdo->query('SELECT count(*) as total FROM course');
+     $result =$sql->fetch(PDO::FETCH_ASSOC); 
+     return $result['total'];
+}
+
+$totalEquipments = getTotalEquipments($pdo);
+
+
+function getEquipmentsByType($pdo) {
+    try {
+        $sql = $pdo->query('SELECT type, COUNT(*) as count FROM equipements GROUP BY type');
+        $result = $sql->fetchAll(PDO::FETCH_ASSOC);
+        
+        $types = [];
+        foreach ($result as $row) {
+            $types[$row['type']] = $row['count'];
+        }
+        return $types;
+    } catch (Exception $e) {
+        return [];
+    }
+}
+
+
+$equipmentsByType = getEquipmentsByType($pdo);
